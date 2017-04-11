@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/demo.css">
+    <link rel="stylesheet" href="./node_modules/dragula/dist/dragula.css">
+</head>
+<body>
+<div class="import-dialog">
+    <div class="column" id="div1" class="container">
+        <div>单选1</div>
+        <div>单选2</div>
+        <div>单选3</div>
+        <div>单选4</div>
+        <div>单选5</div>
+        <div>单选6</div>
+    </div>
+    <div class="column" id="div2" class="container">
+
+    </div>
+    <div class="column"></div>
+</div>
+</body>
+<script src="./node_modules/jquery/dist/jquery.js"></script>
+<script src="./node_modules/dragula/dist/dragula.js"></script>
+<script>
+    $(function () {
+        dragula([$('#div1')[0], $('#div2')[0]], {
+            copy: function (el, source) {
+                return source === $('#div1')[0]
+            },
+            accepts: function (el, target) {
+                return target !== $('#div1')[0]
+            }
+        });
+    })
+</script>
+</html>

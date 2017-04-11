@@ -1,0 +1,93 @@
+.import-dialog {
+  height: 600px;
+}
+.import-dialog .column {
+  border: 1px solid #000;
+  width: 300px;
+  height: 500px;
+  margin-right: 100px;
+  float: left;
+}
+.import-dialog .column li,
+.import-dialog .column div {
+  width: 150px;
+  height: 50px;
+  border: 1px solid #000;
+  margin: 10px 0;
+  list-style: none;
+  cursor: move;
+}
+.import-dialog .column ul {
+  height: 100%;
+}
+.import-dialog .column .drag {
+  background-color: aqua;
+  position: absolute;
+}
+.import-dialog .column .mirror {
+  background-color: gray;
+  opacity: 0.6;
+}
+.import-dialog .column .mark {
+  border: 2px solid red;
+  width: 80%;
+  height: 0px;
+}
+.import-dialog .column .mark.block {
+  display: block;
+}
+.import-dialog .column .mark.none {
+  display: none;
+}
+.import-dialog #middle {
+  overflow: auto;
+}
+.import-dialog .right {
+  border: 1px solid #000;
+  height: 500px;
+  margin-right: 100px;
+  float: left;
+  width: 320px;
+  right: 0;
+  top: 84px;
+  bottom: 0;
+}
+.import-dialog .tab {
+  height: 32px;
+}
+.import-dialog .tab a {
+  text-decoration: none;
+  cursor: pointer;
+  float: left;
+}
+.import-dialog .tab .tabitem {
+  display: inline-block;
+  width: 99px;
+  height: 28px;
+  line-height: 28px;
+  font-size: 15px;
+  text-align: center;
+  border-radius: 2px;
+}
+.import-dialog .tab .tabitem.current {
+  position: relative;
+  background: rgba(0, 0, 0, 0.5);
+}
+.import-dialog .tab .tabitem.current:after {
+  content: '';
+  display: block;
+  overflow: hidden;
+  position: absolute;
+  height: 0;
+  width: 0;
+  border: 4px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.5);
+  bottom: -8px;
+  margin-left: -4px;
+  left: 50%;
+}
+.import-dialog .setting {
+  margin-top: 10px;
+  overflow-y: auto;
+  padding: 19px 0;
+}

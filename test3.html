@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/demo.css">
+</head>
+<body>
+<div class="import-dialog">
+    <div class="column" id="div1">
+        <ul>
+            <li draggable="true" ondragstart="drag(event)" id="drag1">单选1</li>
+            <li draggable="true" ondragstart="drag(event)" id="drag2">单选2</li>
+            <li draggable="true" ondragstart="drag(event)" id="drag3">单选3</li>
+            <li draggable="true" ondragstart="drag(event)" id="drag4">单选4</li>
+            <li draggable="true" ondragstart="drag(event)" id="drag5">单选5</li>
+        </ul>
+    </div>
+    <div class="column">
+        <ul id="div2"></ul>
+    </div>
+    <div class="column"></div>
+</div>
+</body>
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+</html>
+<script>
+    var drag = function (evt) {
+        evt.dataTransfer.setData("text/plain", evt.target.innerHTML);
+    }
+
+    $("#div2")[0].ondrop = function (evt) {
+        var text = evt.dataTransfer.getData("text/plain");
+        var newEle = document.createElement("li");
+        newEle.innerHTML= text;
+        newEle.draggable = "true";
+        newEle.ondragstart = function (evt) {
+            evt.dataTransfer.setData("text/plain", newEle.id);
+        }
+        $("#div2").append(newEle);
+    }
+
+
+    //防止文字选中
+    document.onselectstart = function () {
+        return false;
+    }
+
+    //解决元素无法拖放
+    document.ondragover = function (evt) {
+        return false;
+    }
+
+    //解决默认打开链接
+    document.ondrop = function (evt) {
+        return false;
+    }
+
+</script>
