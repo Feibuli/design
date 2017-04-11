@@ -15,7 +15,7 @@ $(function () {
      }
      }*/
 
-    //1.left向middle拖动元素
+    //1.left向middle拖动
     $('#left').on('mousedown', 'li', function () {
         var $this = $(this);
         var mark = $this.clone().addClass('mark').empty();      //占位栏
@@ -147,10 +147,32 @@ $(function () {
 
     });
 
-    //3.right
+    //3.right切换
     $('.tabitem').click(function () {
         $(this).addClass('current').siblings().removeClass('current');
+
+        if ($(this).attr('data-type') == 'widgetsettings') {
+            $('.widgetsettings').show().next().hide();
+        } else {
+            $('.widgetsettings').hide().next().show();
+        }
+
+
+
     });
+
+    //4.middle点击事件
+    $('#middle').off('click').on('click','li',function () {
+        console.log(0);
+        var $this = $(this);
+        var type = $this.attr('data-type');
+        $this.addClass('active').siblings().removeClass('active');
+        /*switch (type) {
+            case 'selectfield':
+
+        }*/
+    });
+
 
 
 })
