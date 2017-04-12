@@ -69,7 +69,11 @@ $(function () {
                 $(document).off('mousemove mouseup');
                 if (!hasMove) {
                     if (!mark.hasClass('none')) {
-                        mark.replaceWith($this.removeAttr('style').removeClass('drag'));
+                        mark.replaceWith($this.removeAttr('style').removeClass('drag').addClass('active'));
+                        $this.siblings().removeClass('active');
+                        $('.widgetsettings').text($('.active').text());
+                        $('[data-type="widgetsettings"]').addClass('current').siblings().removeClass('current');
+                        $('.widgetsettings').show().next().hide();
                     } else {
                         mark.remove();
                         $this.remove();
@@ -83,12 +87,21 @@ $(function () {
     //2.middle内部拖动
     $('#middle').on('mousedown', 'li', function () {
         var $this = $(this);
-        var mark = $this.clone().addClass('mark').empty();      //占位栏
-        var clone = $this.clone().addClass('mirror');           //替代this元素
+        var mark = $this.clone().removeClass('active').addClass('mark').empty();      //占位栏
+        var clone = $this.clone().removeClass('active').addClass('mirror');           //替代this元素
         var hasMove = 1;
+
+        if (!$this.hasClass('active')) {
+            $this.addClass('active').siblings().removeClass('active');
+        }
+        $('.widgetsettings').text($('.active').text());
+        $('[data-type="widgetsettings"]').addClass('current').siblings().removeClass('current');
+        $('.widgetsettings').show().next().hide();
 
 
         $(document).on('mousemove', function (event) {
+            $this.removeClass('active');
+
 
             var event = event || window.event;
             //获取鼠标在页面上的位置
@@ -135,11 +148,11 @@ $(function () {
                 if (!hasMove) {
                     if (!mark.hasClass('none')) {
                         clone.remove();
-                        mark.replaceWith($this.removeAttr('style').removeClass('drag'));
+                        mark.replaceWith($this.removeAttr('style').removeClass('drag').addClass('active'));
                     } else {
                         mark.remove();
                         $this.remove();
-                        clone.removeAttr('style').removeClass('mirror');
+                        clone.removeAttr('style').removeClass('mirror').addClass('active');
                     }
                 }
             });
@@ -158,21 +171,20 @@ $(function () {
         }
 
 
-
     });
 
     //4.middle点击事件
-    $('#middle').off('click').on('click','li',function () {
-        console.log(0);
+    $('#middle').off('click').on('click', 'li', function () {
         var $this = $(this);
         var type = $this.attr('data-type');
-        $this.addClass('active').siblings().removeClass('active');
         /*switch (type) {
-            case 'selectfield':
+         case 'selectfield':
 
-        }*/
+         }*/
+        $('.widgetsettings').text($('.active').text());
+
+
     });
-
 
 
 })
