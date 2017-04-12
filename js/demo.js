@@ -20,10 +20,13 @@ $(function () {
         var $this = $(this);
         var mark = $this.clone().addClass('mark').empty();      //占位栏
         var clone = $this.clone();                              //替代this元素
+        var focus = $('.active');
         var hasMove = 1;
 
 
         $(document).on('mousemove', function (event) {
+            focus.removeClass('active');
+
 
             var event = event || window.event;
             //获取鼠标在页面上的位置
@@ -71,12 +74,12 @@ $(function () {
                     if (!mark.hasClass('none')) {
                         mark.replaceWith($this.removeAttr('style').removeClass('drag').addClass('active'));
                         $this.siblings().removeClass('active');
-                        $('.widgetsettings').text($('.active').text());
+                        $('.widgetsettings').text($('.active').text()).show().next().hide();
                         $('[data-type="widgetsettings"]').addClass('current').siblings().removeClass('current');
-                        $('.widgetsettings').show().next().hide();
                     } else {
                         mark.remove();
                         $this.remove();
+                        focus.addClass('active');
                     }
                 }
             });
@@ -94,9 +97,8 @@ $(function () {
         if (!$this.hasClass('active')) {
             $this.addClass('active').siblings().removeClass('active');
         }
-        $('.widgetsettings').text($('.active').text());
+        $('.widgetsettings').text($('.active').text()).show().next().hide();
         $('[data-type="widgetsettings"]').addClass('current').siblings().removeClass('current');
-        $('.widgetsettings').show().next().hide();
 
 
         $(document).on('mousemove', function (event) {
@@ -177,15 +179,24 @@ $(function () {
     $('#middle').off('click').on('click', 'li', function () {
         var $this = $(this);
         var type = $this.attr('data-type');
-        /*switch (type) {
-         case 'selectfield':
+        switch (type) {
+            case 'selectfield':
 
-         }*/
+        }
         $('.widgetsettings').text($('.active').text());
 
 
     });
 
+    var input = {
+        title: '',
+        limit: '',
+        placeholder: '',
+    }
+
+    var select = {
+
+    }
 
 })
 
