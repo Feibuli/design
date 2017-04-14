@@ -3,17 +3,6 @@
  */
 $(function () {
 
-    /*function Drag() {
-     this.init.apply(this, arguments);
-     };
-
-     Drag.prototype = {
-     constructor: Drag,
-     init: function (options) {
-     console.log(this);
-
-     }
-     }*/
 
     //1.left向middle拖动
     $('#left').on('mousedown', 'li', function () {
@@ -21,6 +10,7 @@ $(function () {
         var mark = $this.clone().addClass('mark').empty();      //占位栏
         var clone = $this.clone();                              //替代this元素
         var focus = $('.active');
+        var type = $this.attr('data-type');
         var hasMove = 1;
 
 
@@ -74,7 +64,8 @@ $(function () {
                     if (!mark.hasClass('none')) {
                         mark.replaceWith($this.removeAttr('style').removeClass('drag').addClass('active'));
                         $this.siblings().removeClass('active');
-                        $('.widgetsettings').text($('.active').text()).show().next().hide();
+                        new Design(type);
+                        $('.widgetsettings').show().next().hide();
                         $('[data-type="widgetsettings"]').addClass('current').siblings().removeClass('current');
                     } else {
                         mark.remove();
@@ -92,12 +83,16 @@ $(function () {
         var $this = $(this);
         var mark = $this.clone().removeClass('active').addClass('mark').empty();      //占位栏
         var clone = $this.clone().removeClass('active').addClass('mirror');           //替代this元素
+        var type = $this.attr('data-type');
+
         var hasMove = 1;
 
         if (!$this.hasClass('active')) {
             $this.addClass('active').siblings().removeClass('active');
         }
-        $('.widgetsettings').text($('.active').text()).show().next().hide();
+        new Design(type);
+
+        $('.widgetsettings').show().next().hide();
         $('[data-type="widgetsettings"]').addClass('current').siblings().removeClass('current');
 
 
@@ -179,24 +174,169 @@ $(function () {
     $('#middle').off('click').on('click', 'li', function () {
         var $this = $(this);
         var type = $this.attr('data-type');
-        switch (type) {
-            case 'selectfield':
-
-        }
-        $('.widgetsettings').text($('.active').text());
+        new Design(type);
 
 
     });
 
-    var input = {
-        title: '',
-        limit: '',
-        placeholder: '',
+
+    function Design() {
+        this.init.apply(this, arguments);
+    };
+
+    Design.prototype = {
+        constructor: Design,
+        init: function (type) {
+            var t = this;
+            t.template(type);
+            t.bindEvent();
+        },
+        render: function (inputArr, selectArr) {
+            var arr = inputArr || [];
+            if (arr.length != 0) {
+                var input = '';
+                for (var i = 0; i < arr.length; i++) {
+                    var item = arr[i];
+                    input += '<div class="wf-field setting-label">';
+                    input += '<div class="fieldname">';
+                    input += '<span>'+ item.title +'</span>';
+                    input += '<span class="fieldinfo">' + item.limit + '</span>';
+                    input += '</div>';
+                    input += '<div class="fieldblock" >';
+                    input += '<input type="text" maxlength="'+ Number(item.limit.slice(2, 4)) +'" value='+ item.placeholder +'>';
+                    input += '</div>';
+                    input += '</div>';
+                }
+                $('.widgetsettings').html(input);
+            }
+
+
+            var arr = selectArr || [];
+            if (arr.length != 0) {
+                var select = '',
+                    div = $('<div class="wf-field wf-setting-options"></div>');
+                select += '<div class="fieldname">';
+                select += '<span>选项</span>';
+                select += '<span class="fieldinfo">最多20项，每项最多20个字</span>';
+                select += '</div>';
+                select += '<div class="limitdel">';
+                for (var i = 0; i < arr.length; i++) {
+                    var item = arr[i];
+                    select += '<div class="fieldblock wf-setting-option">';
+                    select += '<input type="text" class="" maxlength="20" value="'+ item.option +'">';
+                    select += '<a class="action action-del"><i class="icon icon-minus">-</i></a>';
+                    select += '<a class="action action-add"><i class="icon icon-plus">+</i></a>';
+                    select += '</div>';
+                }
+                select += '</div>';
+                div.appendTo($('.widgetsettings')).html(select);
+            }
+
+
+            var require = '',
+                div = $('<div class="wf-field wf-setting-required"></div>');
+            require += '<div class="fieldname">验证</div>';
+            require += '<label class="fieldblock">';
+            require += '<input type="checkbox"><span class="verticalmiddle">必填</span>';
+            require += '</label>';
+            div.appendTo($('.widgetsettings')).html(require);
+
+            this.bindEvent();
+
+        },
+        template: function (type) {
+            var t = this;
+            var opt = {
+                textfield: {
+                    input: [
+                        {title: '标题', limit: '最多10个字', placeholder: '单行输入框'},
+                        {title: '提示文字', limit: '最多20个字', placeholder: '请输入'}
+                    ],
+                },
+                textareafield: {
+                    input: [
+                        {title: '标题', limit: '最多10个字', placeholder: '多行输入框'},
+                        {title: '提示文字', limit: '最多20个字', placeholder: '请输入'}
+                    ],
+                },
+                datefield: {
+                    input: [
+                        {title: '标题', limit: '最多10个字', placeholder: '日期'}
+                    ],
+                },
+                numberfield: {
+                    input: [
+                        {title: '标题', limit: '最多10个字', placeholder: '数字输入框'},
+                        {title: '提示文字', limit: '最多20个字', placeholder: '请输入'},
+                        {title: '单位', limit: '最多20个字', placeholder: ''}
+                    ],
+                },
+                selectfield: {
+                    input: [
+                        {title: '标题', limit: '最多10个字', placeholder: '单选框'}
+                    ],
+                    select: [
+                        {option: '选项1'},
+                        {option: '选项2'},
+                        {option: '选项3'}
+                    ]
+                }
+
+            }
+
+            t.opt = opt;
+
+            switch (type) {
+                case 'textfield':
+                    t.render(opt.textfield.input);
+                    break;
+                case 'textareafield':
+                    t.render(opt.textareafield.input);
+                    break;
+                case 'numberfield':
+                    t.render(opt.numberfield.input);
+                    break;
+                case 'selectfield':
+                    t.render(opt.selectfield.input, opt.selectfield.select);
+                    break;
+                case 'datefield':
+                    t.render(opt.datefield.input);
+                    break;
+            }
+
+
+        },
+        bindEvent: function () {
+            var t = this;
+            var selectfield = t.opt.selectfield;
+            var index = '';
+            $('.icon-plus').off('click').on('click',function () {
+                index = selectfield.select.length + 1;
+                selectfield.select.push({option: '选项' + index });
+                t.render(selectfield.input, selectfield.select);
+                console.log(index);
+
+
+            });
+            $('.icon-minus').off('click').on('click',function () {
+                index = $(this);
+                selectfield.select.push({option: '选项' + index });
+                t.render(selectfield.input, selectfield.select);
+                console.log(index);
+
+
+            });
+
+
+        },
+
+
+
     }
 
-    var select = {
 
-    }
+    //new Design('textareafield');
+
 
 })
 

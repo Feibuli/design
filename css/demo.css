@@ -117,3 +117,32 @@
   font-weight: normal;
   opacity: 0.9;
 }
+.import-dialog .wf-field .fieldblock {
+  display: block;
+  margin: 5px 0;
+  line-height: normal;
+}
+.import-dialog .wf-field .action {
+  margin-left: 5px;
+  display: inline-block;
+  opacity: 0.6;
+  text-align: center;
+}
+.import-dialog .wf-field .action:hover {
+  opacity: 0.9;
+}
+.import-dialog .wf-field a {
+  text-decoration: none;
+  cursor: pointer;
+}
+.import-dialog .wf-field .icon {
+  background: #000;
+  border-radius: 50%;
+  font-style: normal;
+  color: #fff;
+  padding: 3px 4px 3px 4px;
+  vertical-align: middle;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  font-size: 12px;
+}
