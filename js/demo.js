@@ -199,11 +199,11 @@ $(function () {
                     var item = arr[i];
                     input += '<div class="wf-field setting-label">';
                     input += '<div class="fieldname">';
-                    input += '<span>'+ item.title +'</span>';
+                    input += '<span>' + item.title + '</span>';
                     input += '<span class="fieldinfo">' + item.limit + '</span>';
                     input += '</div>';
                     input += '<div class="fieldblock" >';
-                    input += '<input type="text" maxlength="'+ Number(item.limit.slice(2, 4)) +'" value='+ item.placeholder +'>';
+                    input += '<input type="text" maxlength="' + Number(item.limit.slice(2, 4)) + '" value=' + item.placeholder + '>';
                     input += '</div>';
                     input += '</div>';
                 }
@@ -223,7 +223,7 @@ $(function () {
                 for (var i = 0; i < arr.length; i++) {
                     var item = arr[i];
                     select += '<div class="fieldblock wf-setting-option">';
-                    select += '<input type="text" class="" maxlength="20" value="'+ item.option +'">';
+                    select += '<input type="text" class="" maxlength="20" value="' + item.option + '" index = "' + i + '">';
                     select += '<a class="action action-del"><i class="icon icon-minus">-</i></a>';
                     select += '<a class="action action-add"><i class="icon icon-plus">+</i></a>';
                     select += '</div>';
@@ -308,28 +308,27 @@ $(function () {
         },
         bindEvent: function () {
             var t = this;
-            var selectfield = t.opt.selectfield;
             var index = '';
-            $('.icon-plus').off('click').on('click',function () {
-                index = selectfield.select.length + 1;
-                selectfield.select.push({option: '选项' + index });
+            var selectfield = t.opt.selectfield;
+            $('.icon-plus').off('click').on('click', function () {
+                index = $(this).parents('.fieldblock ').find('input').attr('index');
+                var number = selectfield.select.length + 1;
+                selectfield.select.splice(+index + 1, 0, {option: '选项' + number});
                 t.render(selectfield.input, selectfield.select);
-                console.log(index);
-
-
             });
-            $('.icon-minus').off('click').on('click',function () {
-                index = $(this);
-                selectfield.select.push({option: '选项' + index });
+            $('.icon-minus').off('click').on('click', function () {
+                index = $(this).parents('.fieldblock ').find('input').attr('index');
+                selectfield.select.splice(index, 1);
                 t.render(selectfield.input, selectfield.select);
-                console.log(index);
 
 
             });
 
 
         },
+        sort: function (arr) {
 
+        }
 
 
     }
