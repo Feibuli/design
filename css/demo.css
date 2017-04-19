@@ -96,11 +96,14 @@
 .import-dialog .none {
   display: none;
 }
-.import-dialog .wf-field {
+.import-dialog .wf-settingpanel {
+  overflow: auto;
+}
+.import-dialog .wf-settingpanel .wf-field {
   display: block;
   margin: 5px 0 30px;
 }
-.import-dialog .wf-field .fieldname {
+.import-dialog .wf-settingpanel .wf-field .fieldname {
   display: block;
   font-weight: bold;
   font-size: 12px;
@@ -108,34 +111,34 @@
   margin-bottom: 12px;
   padding-left: 2px;
 }
-.import-dialog .wf-field .fieldname span {
+.import-dialog .wf-settingpanel .wf-field .fieldname span {
   font-size: 12px;
 }
-.import-dialog .wf-field .fieldinfo {
+.import-dialog .wf-settingpanel .wf-field .fieldinfo {
   font-size: 12px !important;
   margin-left: 8px;
   font-weight: normal;
   opacity: 0.9;
 }
-.import-dialog .wf-field .fieldblock {
+.import-dialog .wf-settingpanel .wf-field .fieldblock {
   display: block;
   margin: 5px 0;
   line-height: normal;
 }
-.import-dialog .wf-field .action {
+.import-dialog .wf-settingpanel .wf-field .action {
   margin-left: 5px;
   display: inline-block;
   opacity: 0.6;
   text-align: center;
 }
-.import-dialog .wf-field .action:hover {
+.import-dialog .wf-settingpanel .wf-field .action:hover {
   opacity: 0.9;
 }
-.import-dialog .wf-field a {
+.import-dialog .wf-settingpanel .wf-field a {
   text-decoration: none;
   cursor: pointer;
 }
-.import-dialog .wf-field .icon {
+.import-dialog .wf-settingpanel .wf-field .icon {
   background: #000;
   border-radius: 50%;
   font-style: normal;
@@ -145,4 +148,24 @@
   -webkit-font-smoothing: antialiased;
   -webkit-text-stroke-width: 0.2px;
   font-size: 12px;
+}
+.import-dialog .wf-settingpanel .wf-field.wf-setting-options .limitadd .action-add {
+  opacity: 0.2;
+  pointer-events: none;
+}
+.import-dialog .wf-settingpanel .wf-field.wf-setting-options .limitdel .action-del {
+  opacity: 0.2;
+  pointer-events: none;
+}
+.import-dialog .wf-settingpanel input[type="text"],
+.import-dialog .wf-settingpanel textarea {
+  padding: 6px 10px;
+  width: 200px;
+  outline: none;
+  font-size: 12px;
+}
+.import-dialog .wf-settingpanel input[type="text"]:focus,
+.import-dialog .wf-settingpanel textarea:focus {
+  border-color: #3f9af9;
+  background: transparent;
 }

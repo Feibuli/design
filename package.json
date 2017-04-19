@@ -1,14 +1,24 @@
 {
-  "name": "test",
+  "name": "design",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "dependencies": {
+    "dragula": "^3.7.2",
+    "jquery": "^3.2.1"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Feibuli/design.git"
+  },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "dragula": "file:dragula"
-  }
+  "bugs": {
+    "url": "https://github.com/Feibuli/design/issues"
+  },
+  "homepage": "https://github.com/Feibuli/design#readme"
 }
