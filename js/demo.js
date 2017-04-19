@@ -28,8 +28,6 @@ $(function () {
         } else {
             $('.widgetsettings').hide().next().show();
         }
-
-
     });
 
     //4.middle点击事件
