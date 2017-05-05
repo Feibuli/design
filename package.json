@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "dragula": "^3.7.2",
+    "art-template": "^4.5.1",
     "jquery": "^3.2.1"
   },
   "devDependencies": {},

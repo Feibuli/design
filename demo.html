@@ -6,44 +6,66 @@
     <link rel="stylesheet" href="css/demo.css">
 </head>
 <body>
-<div class="import-dialog">
-    <div class="column">
-        <ul id="left">
-            <li data-type="textfield">单行输入框</li>
-            <li data-type="textareafield">多行输入框</li>
-            <li data-type="numberfield">数字输入框</li>
-            <li data-type="selectfield">单选框</li>
-            <li data-type="datefield">日期</li>
-        </ul>
-    </div>
-    <div class="column">
-        <ul id="middle">
-            <!--<li class="mark"></li>-->
-        </ul>
-    </div>
-    <div class="right wf-settingpanel">
-        <div class="tab">
-            <a class="tabitem" data-type="widgetsettings">控件设置</a>
-            <a class="tabitem current" data-type="formsettings">审批设置</a>
+<div class="wf-wrapper">
+    <div class="wf-header">
+        <!--<div class="head-title">
+            <a href="formManager" target="_self"><img class="navbar-logo" src="" alt="返回审批管理"></a>
+            <span class="navbar-head">设计器</span>
+        </div>-->
+        <div class="head-actions">
+            <button class="wf-new-button wf-button-green">预览</button>
+            <button class="wf-new-button wf-button-blue">保存并启用</button>
         </div>
-        <div class="widgetsettings none"></div>
-        <div class="formsettings">
-            <div class="wf-field wf-setting-title">
-                <div class="fieldname">
-                    <span>审批名称</span>
-                    <span class="fieldinfo">最多10个字</span>
-                </div>
-                <div class="fieldblock" >
-                    <input type="text" class="" value="请假">
-                </div>
+    </div>
+    <div class="wf-main">
+        <div class="column wf-panel wf-widgetspanel">
+            <div class="wf-panel-tab">
+                <a class="tabitem current">控件</a>
             </div>
-            <div class="wf-field wf-setting-description">
-                <div class="fieldname">
-                    <span>审批说明</span>
-                    <span class="fieldinfo ">最多100个字</span>
+            <ul id="left" class="wf-panel-body">
+                <li data-type="textfield">单行输入框</li>
+                <li data-type="textareafield">多行输入框</li>
+                <li data-type="numberfield">数字输入框</li>
+                <li data-type="selectfield">单选框</li>
+                <li data-type="selectareafield">多选框</li>
+                <li data-type="datefield">日期</li>
+                <li data-type="dateareafield">日期区间</li>
+            </ul>
+        </div>
+        <div class="column wf-formcanvas">
+            <div class="wf-formcanvas-title">请假</div>
+            <div class="wf-formcanvas-inner">
+                <div id="middle" class="wf-formcanvas-body">
                 </div>
-                <div class="fieldblock">
-                    <textarea type="text" class="">适用于请假审批</textarea>
+
+            </div>
+        </div>
+        <div class="right wf-panel wf-settingpanel">
+            <div class="wf-panel-tab">
+                <a class="tabitem" data-type="widgetsettings">控件设置</a>
+                <a class="tabitem current" data-type="formsettings">审批设置</a>
+            </div>
+            <div class="widgetsettings none">
+                <div class="wf-component wf-component-ddselectfield active"></div>
+            </div>
+            <div class="formsettings">
+                <div class="wf-field wf-setting-title">
+                    <div class="fieldname">
+                        <span>审批名称</span>
+                        <span class="fieldinfo">最多10个字</span>
+                    </div>
+                    <div class="fieldblock">
+                        <input type="text" class="" value="请假">
+                    </div>
+                </div>
+                <div class="wf-field wf-setting-description">
+                    <div class="fieldname">
+                        <span>审批说明</span>
+                        <span class="fieldinfo ">最多100个字</span>
+                    </div>
+                    <div class="fieldblock">
+                        <textarea type="text" class="">适用于请假审批</textarea>
+                    </div>
                 </div>
             </div>
         </div>
@@ -51,5 +73,27 @@
 </div>
 </body>
 <script src="node_modules/jquery/dist/jquery.js"></script>
+<script src=node_modules/art-template/lib/template-web.js></script>
+>
 <script src="js/demo.js"></script>
+
+<script type=text/html id="selectfield">
+    <div class="wf-component wf-component-<%=type%>" data-type="<%=type%>">
+        <div class="wf-remove icon icon-close">✖</div>
+        <div class="wf-overlay"></div>
+        <div class="wf-componentview">
+            <% for(var i = 0; i < item.length; i++){ %>
+            <div class="wf-componentview-border">
+                <label class="wf-componentview-label"><%= item[i].title %></label>
+                <% if(module=='select'){ %>
+                <span class="wf-componentview-placeholder">请选择</span>
+                <i class="icon icon-enter">＞</i>
+                <% }else{ %>
+                <span class="wf-componentview-placeholder">请输入</span>
+                <% } %>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</script>
 </html>

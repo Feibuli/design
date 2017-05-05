@@ -1,47 +1,250 @@
-.import-dialog {
+u,
+s,
+b,
+i {
+  font-style: normal;
+}
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+tt,
+var,
+b,
+u,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+caption,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  outline: none;
+}
+.wf-header {
+  width: 1200px;
+  height: 40px;
+  margin: 0 auto;
+}
+.wf-header .head-actions {
+  float: right;
+}
+.wf-main {
+  width: 1200px;
   height: 600px;
+  margin: 0px auto;
 }
-.import-dialog .column {
-  border: 1px solid #000;
-  width: 300px;
-  height: 500px;
-  margin-right: 100px;
-  float: left;
-}
-.import-dialog .column li,
-.import-dialog .column div {
-  width: 150px;
+.wf-formcanvas-title {
   height: 50px;
-  border: 1px solid #000;
-  margin: 10px 0;
-  list-style: none;
-  cursor: move;
+  line-height: 50px;
+  text-align: center;
+  font-size: 16px;
+  margin-top: -34px;
 }
-.import-dialog .column ul {
-  height: 100%;
-}
-.import-dialog .column .drag {
-  background-color: aqua;
+.wf-component-selectfield .wf-componentview-placeholder,
+.wf-component-selectareafield .wf-componentview-placeholder,
+.wf-component-datefield .wf-componentview-placeholder,
+.wf-component-dateareafield .wf-componentview-placeholder {
   position: absolute;
+  right: 50px;
+  top: 16px;
+  color: #929292;
 }
-.import-dialog .column .mirror {
-  background-color: gray;
-  opacity: 0.6;
+.wf-component-selectfield .icon-enter,
+.wf-component-selectareafield .icon-enter,
+.wf-component-datefield .icon-enter,
+.wf-component-dateareafield .icon-enter {
+  position: absolute;
+  font-size: 24px;
+  right: 15px;
+  top: 12px;
+  color: #e0e0e0;
 }
-.import-dialog .column .mark {
-  border: 2px solid red;
-  width: 80%;
-  height: 0px;
+.wf-component-dateareafield .wf-componentview-border:not(:first-child) {
+  border-top: none;
 }
-.import-dialog .column .active {
+html:not(.wf-cursor-move) .wf-component.active > .wf-overlay {
   border-width: 1px;
   border-style: solid;
   border-color: #ff5400;
 }
-.import-dialog #middle {
+html:not(.wf-cursor-move) .wf-component.hover > .wf-overlay {
+  border-color: #ff5400;
+}
+html:not(.wf-cursor-move) .wf-component.hover > .wf-remove {
+  display: block;
+}
+.wf-component {
+  width: 300px;
+  margin: 15px 0;
+  overflow: hidden;
+  position: relative;
+}
+.wf-component .wf-remove {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 12px;
+  color: #eee;
+  display: none;
+  cursor: pointer;
+  z-index: 10;
+  background: #ff5400;
+  padding: 2px 3px 3px 2px;
+}
+.wf-component .wf-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  cursor: move;
+  z-index: 9;
+  border: 1px dashed transparent;
+}
+.wf-component.draging > .wf-overlay {
+  border: 1px dashed #666;
+  background-color: #ccc;
+  opacity: 0.8;
+}
+.wf-componentview-border {
+  position: relative;
+}
+.wf-componentview {
+  position: relative;
+}
+.wf-componentview > .wf-componentview-border {
+  border-width: 1px 0;
+  border-style: solid;
+  border-color: #c8c8ca transparent;
+  background: #fff;
+  padding: 15px;
+  white-space: nowrap;
+}
+.wf-componentview > .wf-componentview-border > .wf-componentview-label {
+  display: inline-block;
+  width: 5.5em;
+  padding: 0 8px 0 0;
+  color: #222;
+}
+.wf-componentview-placeholder {
+  color: #ccc;
+  font-size: 15px;
+  vertical-align: top;
+}
+.wf-componentview-label {
+  font-size: 16px;
+  color: #858e99;
+  display: block;
+  padding: 10px 15px;
+  white-space: normal;
+  word-break: break-all;
+  vertical-align: top;
+}
+.column {
+  border: 1px solid #000;
+  width: 300px;
+  height: 500px;
+  margin-right: 80px;
+  float: left;
+}
+.column li {
+  text-align: center;
+  line-height: 50px;
+  float: left;
+  width: 128px;
+  border: 1px solid #000;
+  margin: 10px 10px 10px 0;
+  list-style: none;
+  cursor: move;
+}
+.column ul {
+  height: 100%;
+}
+.column .drager {
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  z-index: 999;
+  transform: scale(0.9, 0.8);
+}
+.column .drager.wf-component {
+  transform: scale(0.75, 0.75);
+}
+.column .drager > .wf-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+.column .mark {
+  border: 2px solid red;
+  width: 80%;
+  height: 0px;
+  margin: 0 auto;
+}
+#middle {
   overflow: auto;
 }
-.import-dialog .right {
+.right {
   border: 1px solid #000;
   height: 500px;
   margin-right: 100px;
@@ -51,15 +254,15 @@
   top: 84px;
   bottom: 0;
 }
-.import-dialog .tab {
+.wf-panel-tab {
   height: 32px;
 }
-.import-dialog .tab a {
+.wf-panel-tab a {
   text-decoration: none;
   cursor: pointer;
   float: left;
 }
-.import-dialog .tab .tabitem {
+.wf-panel-tab .tabitem {
   display: inline-block;
   width: 99px;
   height: 28px;
@@ -68,11 +271,11 @@
   text-align: center;
   border-radius: 2px;
 }
-.import-dialog .tab .tabitem.current {
+.wf-panel-tab .tabitem.current {
   position: relative;
   background: rgba(0, 0, 0, 0.5);
 }
-.import-dialog .tab .tabitem.current:after {
+.wf-panel-tab .tabitem.current:after {
   content: '';
   display: block;
   overflow: hidden;
@@ -85,25 +288,25 @@
   margin-left: -4px;
   left: 50%;
 }
-.import-dialog .setting {
+.setting {
   margin-top: 10px;
   overflow-y: auto;
   padding: 19px 0;
 }
-.import-dialog .block {
+.block {
   display: block;
 }
-.import-dialog .none {
+.none {
   display: none;
 }
-.import-dialog .wf-settingpanel {
+.wf-settingpanel {
   overflow: auto;
 }
-.import-dialog .wf-settingpanel .wf-field {
+.wf-settingpanel .wf-field {
   display: block;
   margin: 5px 0 30px;
 }
-.import-dialog .wf-settingpanel .wf-field .fieldname {
+.wf-settingpanel .wf-field .fieldname {
   display: block;
   font-weight: bold;
   font-size: 12px;
@@ -111,34 +314,34 @@
   margin-bottom: 12px;
   padding-left: 2px;
 }
-.import-dialog .wf-settingpanel .wf-field .fieldname span {
+.wf-settingpanel .wf-field .fieldname span {
   font-size: 12px;
 }
-.import-dialog .wf-settingpanel .wf-field .fieldinfo {
+.wf-settingpanel .wf-field .fieldinfo {
   font-size: 12px !important;
   margin-left: 8px;
   font-weight: normal;
   opacity: 0.9;
 }
-.import-dialog .wf-settingpanel .wf-field .fieldblock {
+.wf-settingpanel .wf-field .fieldblock {
   display: block;
   margin: 5px 0;
   line-height: normal;
 }
-.import-dialog .wf-settingpanel .wf-field .action {
+.wf-settingpanel .wf-field .action {
   margin-left: 5px;
   display: inline-block;
   opacity: 0.6;
   text-align: center;
 }
-.import-dialog .wf-settingpanel .wf-field .action:hover {
+.wf-settingpanel .wf-field .action:hover {
   opacity: 0.9;
 }
-.import-dialog .wf-settingpanel .wf-field a {
+.wf-settingpanel .wf-field a {
   text-decoration: none;
   cursor: pointer;
 }
-.import-dialog .wf-settingpanel .wf-field .icon {
+.wf-settingpanel .wf-field .icon {
   background: #000;
   border-radius: 50%;
   font-style: normal;
@@ -149,23 +352,23 @@
   -webkit-text-stroke-width: 0.2px;
   font-size: 12px;
 }
-.import-dialog .wf-settingpanel .wf-field.wf-setting-options .limitadd .action-add {
+.wf-settingpanel .wf-field.wf-setting-options .limitadd .action-add {
   opacity: 0.2;
   pointer-events: none;
 }
-.import-dialog .wf-settingpanel .wf-field.wf-setting-options .limitdel .action-del {
+.wf-settingpanel .wf-field.wf-setting-options .limitdel .action-del {
   opacity: 0.2;
   pointer-events: none;
 }
-.import-dialog .wf-settingpanel input[type="text"],
-.import-dialog .wf-settingpanel textarea {
+.wf-settingpanel input[type="text"],
+.wf-settingpanel textarea {
   padding: 6px 10px;
   width: 200px;
   outline: none;
   font-size: 12px;
 }
-.import-dialog .wf-settingpanel input[type="text"]:focus,
-.import-dialog .wf-settingpanel textarea:focus {
+.wf-settingpanel input[type="text"]:focus,
+.wf-settingpanel textarea:focus {
   border-color: #3f9af9;
   background: transparent;
 }
