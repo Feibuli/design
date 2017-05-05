@@ -21,9 +21,13 @@ $(function () {
 
     $('.wf-button-blue').on('click', function () {
         $.ajax({
-            url: '172.16.101.124:9090/saveFlowCfg/inputJson',
+            url: '172.16.101.124:9090/saveFlowCfg/',
+
             type: "POST",
-            data: t.getData(),
+            data: {
+                id:xxx,
+                inputJsont:new getData()
+            }
 
 
         });
