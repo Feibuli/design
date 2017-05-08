@@ -19,14 +19,14 @@ $(function () {
         });
     });
 
-    $('.wf-button-blue').on('click', function () {
+    /*$('.wf-button-blue').on('click', function () {
         $.ajax({
             url: '172.16.101.124:9090/saveFlowCfg/',
 
             type: "POST",
             data: {
-                id:xxx,
-                inputJsont:new getData()
+                id: xxx,
+                inputJsont: new getData()
             }
 
 
@@ -48,6 +48,88 @@ $(function () {
 
         }
 
+    };*/
+
+    //middle渲染模块
+    function MidTpl() {
+        this.init.apply(this, arguments);
+    }
+
+    MidTpl.prototype = {
+        constructor: MidTpl,
+        init: function (type) {
+            var t = this;
+            t.template(type);
+
+        },
+        //middle框渲染
+        render: function (arr, type, mod) {
+            var tpl = $(template('selectfield', {item: arr, type: type, module: mod}));
+            $('.active').removeClass('active');
+            $('.wf-formcanvas-body').append(tpl);
+            tpl.addClass('active');
+            return $(tpl);
+        },
+        //middle框模板
+        template: function (type) {
+            var t = this;
+            var opt = {
+                textfield: [{title: '单行输入框'}],
+                textareafield: [{title: '多行输入框'}],
+                datefield: [{title: '日期'}],
+                dateareafield: [{title: '开始时间'}, {title: '结束时间'}],
+                numberfield: [{title: '数字输入框'}],
+                selectfield: [{title: '单选框'}],
+                selectareafield: [{title: '多选框'}]
+            };
+
+            t.opt = opt;
+
+            switch (type) {
+                case 'textfield':
+                    var mod = 'input';
+                    return t.render(t.opt.textfield, type, mod);
+                case 'textareafield':
+                    var mod = 'input';
+                    return t.render(t.opt.textareafield, type, mod);
+                case 'numberfield':
+                    var mod = 'input';
+                    return t.render(t.opt.numberfield, type, mod);
+                case 'selectfield':
+                    var mod = 'select';
+                    return t.render(t.opt.selectfield, type, mod);
+                case 'selectareafield':
+                    var mod = 'select';
+                    return t.render(t.opt.selectareafield, type, mod);
+                case 'datefield':
+                    var mod = 'select';
+                    return t.render(t.opt.datefield, type, mod);
+                case 'dateareafield':
+                    var mod = 'select';
+                    return t.render(t.opt.dateareafield, type, mod);
+            }
+
+
+        },
+        //middle框hover事件right框相应事件
+        bindEvent: function () {
+            $('#middle').off('mouseenter').on('mouseenter', '.wf-component', function () {
+                var $this = $(this);
+                $this.addClass('hover');
+                $('.hover').on('click', '.icon-close', function () {
+                    $this.remove();
+                    $('.tabitem:eq(1)').removeClass('current').siblings().addClass('current');
+                    $('.widgetsettings').empty().next().show();
+                });
+            });
+            $('#middle').on('mouseleave', '.wf-component', function () {
+                $(this).removeClass('hover');
+            });
+        },
+        //解绑middle框hover事件
+        unbindEvent: function () {
+            $('#middle').off('mouseenter', '.wf-component');
+        }
 
 
     };
@@ -73,7 +155,7 @@ $(function () {
         init: function (type) {
             var t = this;
             t.template(type);
-            t.bindEvent();
+            t.bindEvent(type);
             t.tempArr = [];
         },
         render: function (inputArr, selectArr) {
@@ -82,7 +164,7 @@ $(function () {
                 var input = '';
                 for (var i = 0; i < arr.length; i++) {
                     var item = arr[i];
-                    input += '<div class="wf-field setting-label">';
+                    i > 0 ? input += '<div class="wf-field setting-placeholder">' : input += '<div class="wf-field setting-label">';
                     input += '<div class="fieldname">';
                     input += '<span>' + item.title + '</span>';
                     input += '<span class="fieldinfo">' + item.limit + '</span>';
@@ -114,17 +196,17 @@ $(function () {
                 }
                 select += '</div>';
                 div.appendTo($('.widgetsettings')).html(select);
+                this.optionEvent();
             }
 
             var require = '',
-                div = $('<div class="wf-field wf-setting-required"></div>');
+                div = $('<div class="wf-field setting-required"></div>');
             require += '<div class="fieldname">验证</div>';
             require += '<label class="fieldblock">';
             require += '<input type="checkbox"><span class="verticalmiddle">必填</span>';
             require += '</label>';
             div.appendTo($('.widgetsettings')).html(require);
 
-            this.bindEvent();
         },
         template: function (type) {
             var t = this;
@@ -209,12 +291,96 @@ $(function () {
 
 
         },
-        bindEvent: function () {
+        newTpl: function (type) {
+            var t = this;
+
+            var opt = {
+                textfield: {
+                    input: [
+                        {title: '标题', limit: '最多10个字', placeholder: '单行输入框'},
+                        {title: '提示文字', limit: '最多20个字', placeholder: '请输入'}
+                    ],
+                },
+                textareafield: {
+                    input: [
+                        {title: '标题', limit: '最多10个字', placeholder: '多行输入框'},
+                        {title: '提示文字', limit: '最多20个字', placeholder: '请输入'}
+                    ],
+                },
+                datefield: {
+                    input: [
+                        {title: '标题', limit: '最多10个字', placeholder: '日期'}
+                    ],
+                },
+                dateareafield: {
+                    input: [
+                        {title: '标题', limit: '最多10个字', placeholder: '开始时间'},
+                        {title: '标题', limit: '最多10个字', placeholder: '结束时间'}
+                    ],
+                },
+                numberfield: {
+                    input: [
+                        {title: '标题', limit: '最多10个字', placeholder: '数字输入框'},
+                        {title: '提示文字', limit: '最多20个字', placeholder: '请输入'},
+                        {title: '单位', limit: '最多20个字', placeholder: ''}
+                    ],
+                },
+                selectfield: {
+                    input: [
+                        {title: '标题', limit: '最多10个字', placeholder: $('.setting-label input').val()}
+                    ],
+                    select: [
+                        {option: '选项1'},
+                        {option: '选项2'},
+                        {option: '选项3'}
+                    ]
+                },
+                selectareafield: {
+                    input: [
+                        {title: '标题', limit: '最多10个字', placeholder: '多选框'}
+                    ],
+                    select: [
+                        {option: '选项1'},
+                        {option: '选项2'},
+                        {option: '选项3'}
+                    ]
+                }
+            };
+            t.opt = opt;
+            switch (type) {
+                case 'textfield':
+                    t.render(opt.textfield.input);
+                    break;
+                case 'textareafield':
+                    t.render(opt.textareafield.input);
+                    break;
+                case 'numberfield':
+                    t.render(opt.numberfield.input);
+                    break;
+                case 'selectfield':
+                    t.render(opt.selectfield.input, opt.selectfield.select);
+                    break;
+                case 'selectareafield':
+                    t.render(opt.selectareafield.input, opt.selectareafield.select);
+                    break;
+                case 'datefield':
+                    t.render(opt.datefield.input);
+                    break;
+                case 'dateareafield':
+                    t.render(opt.dateareafield.input);
+                    break;
+            }
+
+            console.log(t.opt.selectfield.input[0]);
+
+        },
+        optionEvent: function () {
             var t = this;
             var index = '';
             var number = '';
             var length = '';
             var selectfield = t.opt.selectfield;
+            //添加选项
             $('.icon-plus').off('click').on('click', function () {
                 var tempArr = t.tempArr;
 
@@ -238,12 +404,12 @@ $(function () {
                 }
             });
 
-
+            //删除选项
             $('.icon-minus').off('click').on('click', function () {
                 var tempArr = t.tempArr;
                 index = $(this).parents('.fieldblock').find('input').attr('index');
 
-                //存储删除数组项
+                //存储删除数选项
                 tempArr.push(selectfield.select.splice(index, 1)[0].option.slice(2));
                 t.render(selectfield.input, selectfield.select);
 
@@ -263,6 +429,28 @@ $(function () {
             }
 
         },
+        bindEvent: function () {
+            var t = this;
+            $('.setting-label').on('keyup', 'input', function () {
+                $('.active .wf-componentview-label').text($(this).val());
+                t.opt.selectfield.input[0].placeholder = $(this).val();
+                //console.log(t.opt.selectfield.input[0]);
+                //t.render(t.opt.selectfield.input, t.opt.selectfield.select);
+
+            });
+            $('.setting-placeholder:first').on('keyup', 'input', function () {
+                $('.active .wf-componentview-placeholder').text($(this).val());
+            });
+            $('.setting-required').off('click','label').on('click', 'input', function () {
+                var require = '(必填)';
+                var text = $('.active .wf-componentview-placeholder').text();
+                if ($('#require').prop("checked")) {
+                    $('.active .wf-componentview-placeholder').text(text+require);
+                } else {
+                    $('.active .wf-componentview-placeholder').text(text.replace('(必填)',''));
+                }
+            });
+        }
     };
 
     //6.drag模块重构
@@ -275,7 +463,7 @@ $(function () {
         init: function (options) {
             var t = this;
             t.opts = $.extend({}, t.options, options);
-            t.bindEvent();
+            MidTpl.prototype.bindEvent();
             t.opts.type == 'dragTo' ? t.dragTo() : t.dragIn();
         },
         //外部拖拽
@@ -289,7 +477,8 @@ $(function () {
             var type = $this.attr('data-type');
             var hasMove = 1;
 
-            t.unbindEvent();
+            MidTpl.prototype.unbindEvent();
+
             $(document).on('mousemove', function (event) {
                 focus.removeClass('active');
                 //添加占位栏和镜像元素
@@ -299,11 +488,11 @@ $(function () {
                 }
                 dragMove($this, event, mark);
             }).on('mouseup', function () {
-                t.bindEvent();
+                MidTpl.prototype.bindEvent();
                 $(document).off('mousemove mouseup');
                 if (!hasMove) {
                     if (!mark.hasClass('none')) {
-                        var tpl = t.template(type);
+                        var tpl = new MidTpl(type);
                         $this.remove();
                         mark.replaceWith(tpl);
                         new RightTpl(type);
@@ -326,13 +515,14 @@ $(function () {
             var clone = $this.clone().removeClass('active').removeClass('hover');
             var type = $this.attr('data-type');
             var hasMove = 1;
-            t.unbindEvent();
+            MidTpl.prototype.unbindEvent();
 
             clone.addClass('draging');
             if (!$this.hasClass('active')) {
                 $this.addClass('active').siblings().removeClass('active');
             }
             new RightTpl(type);
+            //RightTpl.prototype.newTpl(type);
 
             $('.widgetsettings').show().next().hide();
             $('[data-type="widgetsettings"]').addClass('current').siblings().removeClass('current');
@@ -350,7 +540,7 @@ $(function () {
                 dragMove($this, event, mark);
             }).on('mouseup', function () {
                 $(document).off('mousemove mouseup');
-                t.bindEvent();
+                MidTpl.prototype.bindEvent();
                 if (!hasMove) {
                     if (!mark.hasClass('none')) {
                         clone.remove();
@@ -396,81 +586,6 @@ $(function () {
             //防止文字选中
             window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
         },
-        //middle框渲染
-        render: function (arr, type, mod) {
-            var tpl = $(template('selectfield', {item: arr, type: type, module: mod}));
-            $('.active').removeClass('active');
-            $('.wf-formcanvas-body').append(tpl);
-            tpl.addClass('active');
-            return $(tpl);
-        },
-        //middle框模板
-        template: function (type) {
-            var t = this;
-            var opt = {
-                textfield: [{title: '单行输入框'}],
-                textareafield: [{title: '多行输入框'}],
-                datefield: [{title: '日期'}],
-                dateareafield: [{title: '开始时间'}, {title: '结束时间'}],
-                numberfield: [{title: '数字输入框'}],
-                selectfield: [{title: '单选框'}],
-                selectareafield: [{title: '多选框'}]
-            };
-
-            t.opt = opt;
-
-            switch (type) {
-                case 'textfield':
-                    var mod = 'input';
-                    return t.render(t.opt.textfield, type, mod);
-                    break;
-                case 'textareafield':
-                    var mod = 'input';
-                    return t.render(t.opt.textareafield, type, mod);
-                    break;
-                case 'numberfield':
-                    var mod = 'input';
-                    return t.render(t.opt.numberfield, type, mod);
-                    break;
-                case 'selectfield':
-                    var mod = 'select';
-                    return t.render(t.opt.selectfield, type, mod);
-                    break;
-                case 'selectareafield':
-                    var mod = 'select';
-                    return t.render(t.opt.selectareafield, type, mod);
-                    break;
-                case 'datefield':
-                    var mod = 'select';
-                    return t.render(t.opt.datefield, type, mod);
-                    break;
-                case 'dateareafield':
-                    var mod = 'select';
-                    return t.render(t.opt.dateareafield, type, mod);
-                    break;
-            }
-
-
-        },
-        //middle框hover事件right框相应事件
-        bindEvent: function () {
-            $('#middle').off('mouseenter').on('mouseenter', '.wf-component', function () {
-                var $this = $(this);
-                $this.addClass('hover');
-                $('.hover').on('click', '.icon-close', function () {
-                    $this.remove();
-                    $('.tabitem:eq(1)').removeClass('current').siblings().addClass('current');
-                    $('.widgetsettings').empty().next().show();
-                });
-            });
-            $('#middle').on('mouseleave', '.wf-component', function () {
-                $(this).removeClass('hover');
-            });
-        },
-        //解绑middle框hover事件
-        unbindEvent: function () {
-            $('#middle').off('mouseenter', '.wf-component');
-        }
 
 
     };

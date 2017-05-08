@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/lodash.min.js"></script>
+</head>
+<body>
+    <script>
+
+        //All Template
+        var originTemplates = [
+            {
+                type: 1//INPUT
+            },{
+                type: 2//SELECT
+            }
+        ];
+        leftRender(originTemplates);//->渲染左边的控件列表
+
+        //Active Template
+        var activeTemplates = [];
+        var dragIndex = 1;//模拟Drag事件,选中的控件类型对应的模板下标为1的模板
+        var tpl = originTemplates[dragIndex];
+        var tplCopy = _.clone(tpl);
+        activeTemplates.push(tplCopy);
+        middleRender(activeTemplates);//渲染中间的控件
+
+        //Click Template
+        var clickIndex = 0;//模拟click事件,选中的控件类型对应的模板下标为1的模板
+        var activeTemplate = activeTemplates[clickIndex];
+        activeTemplate.require = true;
+        rightRander(activeTemplate);
+
+        function leftRender(originTemplates){
+            console.log(originTemplates);
+        }
+        function middleRender(activeTemplates){
+            console.log(activeTemplates);
+        }
+        function rightRander(activeTemplate){
+            console.log(activeTemplate);
+        }
+    </script>
+</body>
+</html>
